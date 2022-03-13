@@ -1,0 +1,21 @@
+plugins {
+    id 'java'
+}
+
+group 'org.kowalsky'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    def junitVersion = '5.8.2'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:$junitVersion'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:$junitVersion'
+}
+
+test {
+    useJUnitPlatform()
+}
