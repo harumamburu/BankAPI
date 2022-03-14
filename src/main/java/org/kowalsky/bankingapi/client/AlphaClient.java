@@ -23,6 +23,8 @@ import static java.lang.String.format;
 
 public class AlphaClient implements CurrenciesClient {
 
+    private static final String ALPHA_CODE = "ALPHA";
+
     private final HttpClient httpClient;
     private final Mapper mapper;
     private BankingApiMeta bankingApi;
@@ -32,6 +34,11 @@ public class AlphaClient implements CurrenciesClient {
                        Mapper mapper) {
         this.httpClient = httpClient;
         this.mapper = mapper;
+    }
+
+    @Override
+    public String getBankCode() {
+        return ALPHA_CODE;
     }
 
     @Override

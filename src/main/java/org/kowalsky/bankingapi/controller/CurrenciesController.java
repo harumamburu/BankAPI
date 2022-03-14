@@ -1,7 +1,11 @@
 package org.kowalsky.bankingapi.controller;
 
 import com.google.gson.Gson;
+import org.eclipse.jetty.http.HttpStatus;
+import org.kowalsky.bankingapi.client.exception.OpenAPIRequestException;
+import org.kowalsky.bankingapi.model.ErrorModel;
 import org.kowalsky.bankingapi.service.CurrenciesService;
+import org.kowalsky.bankingapi.service.NoBankClientFoundException;
 
 import javax.inject.Inject;
 
@@ -14,7 +18,19 @@ public class CurrenciesController {
         this.currenciesService = currenciesService;
     }
 
-    public String getCurrencies() {
-        return new Gson().toJson(currenciesService.getCurrencies());
+    public ResponseWrapper getCurrencies(String bankCode) {
+        try {
+            return new ResponseWrapper(
+                    new Gson().toJson(currenciesService.getCurrencies(bankCode)),
+                    HttpStatus.OK_200);
+        } catch (OpenAPIRequestException e) {
+            return new ResponseWrapper(
+                    new Gson().toJson(new ErrorModel(e.getMessage(), e.getHttpStatus())),
+                    e.getHttpStatus());
+        } catch (NoBankClientFoundException e) {
+            return new ResponseWrapper(
+                    new Gson().toJson(new ErrorModel("Malformed Bank Code", HttpStatus.BAD_REQUEST_400)),
+                    HttpStatus.BAD_REQUEST_400);
+        }
     }
 }

@@ -4,9 +4,10 @@ import com.google.gson.Gson;
 import com.mongodb.client.MongoClient;
 import dagger.Component;
 import org.eclipse.jetty.http.HttpStatus;
+import org.kowalsky.bankingapi.client.ClientBindingModule;
 import org.kowalsky.bankingapi.client.HttpClientModule;
-import org.kowalsky.bankingapi.client.exception.OpenAPIRequestException;
 import org.kowalsky.bankingapi.controller.CurrenciesController;
+import org.kowalsky.bankingapi.controller.ResponseWrapper;
 import org.kowalsky.bankingapi.model.ErrorModel;
 import org.kowalsky.bankingapi.model.mapper.MapperModule;
 import org.kowalsky.bankingapi.repository.MongoModule;
@@ -18,7 +19,7 @@ import static spark.Spark.*;
 public class Application {
 
     @Singleton
-    @Component(modules = { HttpClientModule.class, MapperModule.class, MongoModule.class })
+    @Component(modules = { HttpClientModule.class, MapperModule.class, MongoModule.class, ClientBindingModule.class })
     public interface BankingAPI {
         CurrenciesController currenciesAPI();
         MongoClient exposeMongoClient();
@@ -30,12 +31,11 @@ public class Application {
         path("/openbanking", () -> {
             path("/v1", () -> {
                 path("/currencies", () -> {
-                    get("", (request, response) -> currenciesController.getCurrencies());
-                });
-
-                exception(OpenAPIRequestException.class, (exc, request, response) -> {
-                        response.body(new Gson().toJson(new ErrorModel(exc.getMessage(), exc.getHttpStatus())));
-                        response.status(exc.getHttpStatus());
+                    get("", (request, response) -> {
+                        ResponseWrapper resp = currenciesController.getCurrencies(request.queryParams("bankCode"));
+                        response.status(resp.statusCode());
+                        return resp.body();
+                    });
                 });
             });
 
