@@ -2,9 +2,11 @@ package org.kowalsky.bankingapi.client;
 
 import com.github.dozermapper.core.Mapper;
 import org.eclipse.jetty.http.HttpStatus;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.kowalsky.bankingapi.client.exception.OpenAPIRequestException;
+import org.kowalsky.bankingapi.model.BankingApiMeta;
 import org.kowalsky.bankingapi.model.CurrencyRate;
 import org.kowalsky.bankingapi.model.CurrencyRates;
 import org.kowalsky.bankingapi.model.alpha.AlphaCurrencyRates;
@@ -35,6 +37,15 @@ class AlphaClientTest {
     HttpClient httpClient;
     @Mock
     Mapper mapper;
+
+    @BeforeEach
+    public void setUp() {
+        BankingApiMeta bankingApi = new BankingApiMeta();
+        bankingApi.setApiBase("https://test/");
+        bankingApi.setCurrencyEndpoint("/curr");
+        bankingApi.setVersion("0.1");
+        client.setBankingApi(bankingApi);
+    }
 
     @Test
     public void test_getCurrencies_successfulResponseReceived_currenciesListReturned()

@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import org.eclipse.jetty.http.HttpStatus;
 import org.kowalsky.bankingapi.client.exception.OpenAPIRequestException;
+import org.kowalsky.bankingapi.model.BankingApiMeta;
 import org.kowalsky.bankingapi.model.CurrencyRates;
 import org.kowalsky.bankingapi.model.alpha.AlphaCurrencyRates;
 import org.kowalsky.bankingapi.model.alpha.AlphaShortError;
@@ -24,6 +25,7 @@ public class AlphaClient implements CurrenciesClient {
 
     private final HttpClient httpClient;
     private final Mapper mapper;
+    private BankingApiMeta bankingApi;
 
     @Inject
     public AlphaClient(@Named("alphaHttpClient") HttpClient httpClient,
@@ -36,7 +38,8 @@ public class AlphaClient implements CurrenciesClient {
     public CurrencyRates getCurrencies() {
         try {
             HttpResponse<String> response = httpClient.send(HttpRequest.newBuilder()
-                            .uri(URI.create("https://developerhub.alfabank.by:8273/partner/1.0.1/public/rate"))
+                            .uri(URI.create(
+                                    bankingApi.getApiBase() + bankingApi.getVersion() + bankingApi.getCurrencyEndpoint()))
                             .GET()
                             .build(), BodyHandlers.ofString());
 
@@ -56,5 +59,9 @@ public class AlphaClient implements CurrenciesClient {
             throw new OpenAPIRequestException("Request to AlphaBank API failed: " + e.getMessage(),
                     HttpStatus.INTERNAL_SERVER_ERROR_500);
         }
+    }
+
+    public void setBankingApi(BankingApiMeta bankingApi) {
+        this.bankingApi = bankingApi;
     }
 }
