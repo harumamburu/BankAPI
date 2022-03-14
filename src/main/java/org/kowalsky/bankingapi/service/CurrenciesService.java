@@ -1,6 +1,5 @@
 package org.kowalsky.bankingapi.service;
 
-import org.kowalsky.bankingapi.client.AlphaClient;
 import org.kowalsky.bankingapi.client.CurrenciesClient;
 import org.kowalsky.bankingapi.model.CurrencyRates;
 import org.kowalsky.bankingapi.repository.MongoRepository;
