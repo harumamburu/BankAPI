@@ -1,6 +1,8 @@
 package org.kowalsky.bankingapi.clinet;
 
+import org.kowalsky.bankingapi.model.CurrencyRates;
+
 public interface CurrenciesClient {
 
-    String getCurrencies();
+    CurrencyRates getCurrencies();
 }

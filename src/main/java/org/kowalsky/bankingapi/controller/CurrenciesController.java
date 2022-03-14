@@ -1,6 +1,7 @@
 package org.kowalsky.bankingapi.controller;
 
 import org.kowalsky.bankingapi.clinet.AlphaClient;
+import org.kowalsky.bankingapi.model.CurrencyRates;
 
 import javax.inject.Inject;
 
@@ -13,7 +14,7 @@ public class CurrenciesController {
         this.alphaClient = alphaClient;
     }
 
-    public String getCurrencies() {
+    public CurrencyRates getCurrencies() {
         return alphaClient.getCurrencies();
     }
 }

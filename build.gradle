@@ -15,9 +15,11 @@ dependencies {
     def mockitoVersion = '4.4.0'
 
     implementation "com.sparkjava:spark-core:2.9.3"
-
     implementation "com.google.dagger:dagger:$daggerVersion"
     annotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
+    implementation "com.google.code.gson:gson:2.9.0"
+    implementation "javax.xml.bind:jaxb-api:2.3.1"
+    implementation "com.github.dozermapper:dozer-core:6.5.2"
 
     testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
