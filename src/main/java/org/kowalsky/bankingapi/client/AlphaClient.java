@@ -2,6 +2,7 @@ package org.kowalsky.bankingapi.client;
 
 import com.github.dozermapper.core.Mapper;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import org.eclipse.jetty.http.HttpStatus;
 import org.kowalsky.bankingapi.client.exception.OpenAPIRequestException;
 import org.kowalsky.bankingapi.model.CurrencyRates;
@@ -35,7 +36,7 @@ public class AlphaClient implements CurrenciesClient {
     public CurrencyRates getCurrencies() {
         try {
             HttpResponse<String> response = httpClient.send(HttpRequest.newBuilder()
-                            .uri(URI.create("https://developerhub.alfabank.by:8273/partner/1.0.1/public/rates"))
+                            .uri(URI.create("https://developerhub.alfabank.by:8273/partner/1.0.1/public/rate"))
                             .GET()
                             .build(), BodyHandlers.ofString());
 
@@ -43,9 +44,13 @@ public class AlphaClient implements CurrenciesClient {
                 return mapper.map(new Gson().fromJson(response.body(), AlphaCurrencyRates.class),
                         CurrencyRates.class);
             } else {
-                AlphaShortError error = new Gson().fromJson(response.body(), AlphaShortError.class);
-                throw new OpenAPIRequestException(format("Request to AlphaBank API failed: %s. Code %d",
-                        error.getMessage(), error.getCode()), response.statusCode());
+                try {
+                    AlphaShortError error = new Gson().fromJson(response.body(), AlphaShortError.class);
+                    throw new OpenAPIRequestException(format("Request to AlphaBank API failed: %s. Code %d",
+                            error.getMessage(), error.getCode()), response.statusCode());
+                } catch (JsonSyntaxException e) {
+                    throw new OpenAPIRequestException("Request to AlphaBank API failed", response.statusCode());
+                }
             }
         } catch (IOException | InterruptedException e) {
             throw new OpenAPIRequestException("Request to AlphaBank API failed: " + e.getMessage(),

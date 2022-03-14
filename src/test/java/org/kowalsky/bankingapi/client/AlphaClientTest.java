@@ -89,6 +89,18 @@ class AlphaClientTest {
     }
 
     @Test
+    public void test_getCurrencies_notFoundResponseReceived_exceptionIsThrown() throws IOException, InterruptedException {
+        String testBody = "Not Found";
+        HttpResponse<String> httpResponse = mock(HttpResponse.class);
+        when(httpResponse.body()).thenReturn(testBody);
+        when(httpResponse.statusCode()).thenReturn(HttpStatus.NOT_FOUND_404);
+        when(httpClient.send(any(HttpRequest.class), any(HttpResponse.BodyHandler.class)))
+                .thenReturn(httpResponse);
+
+        assertThrows(OpenAPIRequestException.class, () -> client.getCurrencies());
+    }
+
+    @Test
     public void test_getCurrencies_IOExceptionOccurs_throwsException() throws IOException, InterruptedException {
         when(httpClient.send(any(HttpRequest.class), any(HttpResponse.BodyHandler.class)))
                 .thenThrow(IOException.class);
