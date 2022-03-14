@@ -1,7 +1,6 @@
 package org.kowalsky.bankingapi.controller;
 
-import org.kowalsky.bankingapi.client.AlphaClient;
-import org.kowalsky.bankingapi.model.CurrencyRates;
+import com.google.gson.Gson;
 import org.kowalsky.bankingapi.service.CurrenciesService;
 
 import javax.inject.Inject;
@@ -15,7 +14,7 @@ public class CurrenciesController {
         this.currenciesService = currenciesService;
     }
 
-    public CurrencyRates getCurrencies() {
-        return currenciesService.getCurrencies();
+    public String getCurrencies() {
+        return new Gson().toJson(currenciesService.getCurrencies());
     }
 }

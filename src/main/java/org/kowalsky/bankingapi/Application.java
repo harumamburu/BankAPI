@@ -30,7 +30,7 @@ public class Application {
         path("/openbanking", () -> {
             path("/v1", () -> {
                 path("/currencies", () -> {
-                    get("", (request, response) -> new Gson().toJson(currenciesController.getCurrencies()));
+                    get("", (request, response) -> currenciesController.getCurrencies());
                 });
 
                 exception(OpenAPIRequestException.class, (exc, request, response) -> {
