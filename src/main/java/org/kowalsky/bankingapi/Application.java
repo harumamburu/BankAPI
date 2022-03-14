@@ -2,7 +2,7 @@ package org.kowalsky.bankingapi;
 
 import com.google.gson.Gson;
 import dagger.Component;
-import org.kowalsky.bankingapi.clinet.HttpClientModule;
+import org.kowalsky.bankingapi.client.HttpClientModule;
 import org.kowalsky.bankingapi.controller.CurrenciesController;
 import org.kowalsky.bankingapi.model.mapper.MapperModule;
 

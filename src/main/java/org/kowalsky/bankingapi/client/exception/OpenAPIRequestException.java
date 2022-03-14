@@ -1,4 +1,4 @@
-package org.kowalsky.bankingapi.clinet.exception;
+package org.kowalsky.bankingapi.client.exception;
 
 public class OpenAPIRequestException extends RuntimeException {
 

@@ -1,4 +1,4 @@
-package org.kowalsky.bankingapi.clinet;
+package org.kowalsky.bankingapi.client;
 
 import org.kowalsky.bankingapi.model.CurrencyRates;
 

@@ -1,6 +1,6 @@
 package org.kowalsky.bankingapi.controller;
 
-import org.kowalsky.bankingapi.clinet.AlphaClient;
+import org.kowalsky.bankingapi.client.AlphaClient;
 import org.kowalsky.bankingapi.model.CurrencyRates;
 
 import javax.inject.Inject;

@@ -1,9 +1,9 @@
-package org.kowalsky.bankingapi.clinet;
+package org.kowalsky.bankingapi.client;
 
 import com.github.dozermapper.core.Mapper;
 import com.google.gson.Gson;
 import org.eclipse.jetty.http.HttpStatus;
-import org.kowalsky.bankingapi.clinet.exception.OpenAPIRequestException;
+import org.kowalsky.bankingapi.client.exception.OpenAPIRequestException;
 import org.kowalsky.bankingapi.model.CurrencyRates;
 import org.kowalsky.bankingapi.model.alpha.AlphaCurrencyRates;
 import org.kowalsky.bankingapi.model.alpha.AlphaShortError;
