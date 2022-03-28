@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
 group 'org.kowalsky'
@@ -9,9 +10,15 @@ repositories {
     mavenCentral()
 }
 
+shadowJar {
+    manifest {
+        attributes 'Main-Class': 'org.kowalsky.bankingapi.Application'
+    }
+}
+
 dependencies {
     def junitVersion = '5.8.2'
-    def daggerVersion = '2.36'
+    def daggerVersion = '2.41'
     def mockitoVersion = '4.4.0'
 
     implementation "com.sparkjava:spark-core:2.9.3"
