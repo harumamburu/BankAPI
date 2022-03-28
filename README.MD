@@ -1,5 +1,6 @@
 ### Banking Middleware API
 #### API
-- GET /openbanking/currencies?bankCode=${bankCode}
+- GET /openbanking/currencies
+- GET /openbanking/currencies/${bankCode}
 #### Proposed Architecture
 ![Architecture proposal](./BankingAPI.jpg)
