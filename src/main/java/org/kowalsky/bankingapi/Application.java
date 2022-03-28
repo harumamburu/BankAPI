@@ -13,16 +13,19 @@ import org.kowalsky.bankingapi.model.mapper.MapperModule;
 import org.kowalsky.bankingapi.repository.MongoModule;
 
 import javax.inject.Singleton;
+import java.util.Properties;
 
 import static spark.Spark.*;
 
 public class Application {
 
     @Singleton
-    @Component(modules = { HttpClientModule.class, MapperModule.class, MongoModule.class, ClientBindingModule.class })
+    @Component(modules = { PropertiesModule.class, HttpClientModule.class, MapperModule.class,
+                           MongoModule.class, ClientBindingModule.class })
     public interface BankingAPI {
         CurrenciesController currenciesAPI();
         MongoClient exposeMongoClient();
+        Properties exposeProperties();
     }
 
     public static void main(String[] args) {
