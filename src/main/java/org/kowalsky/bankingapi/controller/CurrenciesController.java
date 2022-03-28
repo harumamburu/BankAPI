@@ -29,7 +29,7 @@ public class CurrenciesController {
                     e.getHttpStatus());
         } catch (NoBankClientFoundException e) {
             return new ResponseWrapper(
-                    new Gson().toJson(new ErrorModel("Malformed Bank Code", HttpStatus.BAD_REQUEST_400)),
+                    new Gson().toJson(new ErrorModel("Malformed Bank Code: " + e.getBankCode(), HttpStatus.BAD_REQUEST_400)),
                     HttpStatus.BAD_REQUEST_400);
         }
     }
