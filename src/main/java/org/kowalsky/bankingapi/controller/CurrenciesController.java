@@ -33,4 +33,16 @@ public class CurrenciesController {
                     HttpStatus.BAD_REQUEST_400);
         }
     }
+
+    public ResponseWrapper getCurrencies() {
+        try {
+            return new ResponseWrapper(
+                    new Gson().toJson(currenciesService.getCurrencies()),
+                    HttpStatus.OK_200);
+        } catch (OpenAPIRequestException e) {
+            return new ResponseWrapper(
+                    new Gson().toJson(new ErrorModel(e.getMessage(), e.getHttpStatus())),
+                    e.getHttpStatus());
+        }
+    }
 }

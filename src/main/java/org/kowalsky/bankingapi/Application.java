@@ -31,8 +31,13 @@ public class Application {
         path("/openbanking", () -> {
             path("/v1", () -> {
                 path("/currencies", () -> {
+                    get("/:bankCode", (request, response) -> {
+                        ResponseWrapper resp = currenciesController.getCurrencies(request.params(":bankCode"));
+                        response.status(resp.statusCode());
+                        return resp.body();
+                    });
                     get("", (request, response) -> {
-                        ResponseWrapper resp = currenciesController.getCurrencies(request.queryParams("bankCode"));
+                        ResponseWrapper resp = currenciesController.getCurrencies();
                         response.status(resp.statusCode());
                         return resp.body();
                     });
